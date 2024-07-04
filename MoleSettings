@@ -1,0 +1,15 @@
+public class Moleettings : CustomRoleSettings
+{
+    public static bool EnableTaskStealing { get; set; } = true;
+    public static bool EnableBodyEating { get; set; } = true;
+    public static float TaskStealCooldown { get; set; } = 30f;
+    public static float BodyEatCooldown { get; set; } = 30f;
+
+    public Moleettings()
+    {
+        AddSetting("Enable Task Stealing", EnableTaskStealing);
+        AddSetting("Enable Body Eating", EnableBodyEating);
+        AddSetting("Task Steal Cooldown", TaskStealCooldown);
+        AddSetting("Body Eat Cooldown", BodyEatCooldown);
+    }
+}
