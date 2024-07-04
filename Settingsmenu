@@ -17,10 +17,10 @@ public class SettingsMenu : MonoBehaviour
         // Assuming settingsPanel is a GameObject with a panel for settings
         settingsPanel.SetActive(true);
 
-        AddToggle("Enable Task Stealing", MoleSettings.EnableTaskStealing, taskStealingToggle);
-        AddToggle("Enable Body Eating", MoleSettings.EnableBodyEating, bodyEatingToggle);
-        AddSlider("Task Steal Cooldown", 5f, 60f, MoleSettings.TaskStealCooldown, taskStealCooldownSlider, taskStealCooldownText);
-        AddSlider("Body Eat Cooldown", 5f, 60f, MoleSettings.BodyEatCooldown, bodyEatCooldownSlider, bodyEatCooldownText);
+        AddToggle("Enable Task Stealing", WildcardSettings.EnableTaskStealing, taskStealingToggle);
+        AddToggle("Enable Body Eating", WildcardSettings.EnableBodyEating, bodyEatingToggle);
+        AddSlider("Task Steal Cooldown", 5f, 60f, WildcardSettings.TaskStealCooldown, taskStealCooldownSlider, taskStealCooldownText);
+        AddSlider("Body Eat Cooldown", 5f, 60f, WildcardSettings.BodyEatCooldown, bodyEatCooldownSlider, bodyEatCooldownText);
     }
 
     private void AddToggle(string label, bool defaultValue, Toggle toggle)
@@ -29,11 +29,11 @@ public class SettingsMenu : MonoBehaviour
         toggle.onValueChanged.AddListener((bool value) => {
             if (label == "Enable Task Stealing")
             {
-                MoleSettings.EnableTaskStealing = value;
+                WildcardSettings.EnableTaskStealing = value;
             }
             else if (label == "Enable Body Eating")
             {
-                MoleSettings.EnableBodyEating = value;
+                WildcardSettings.EnableBodyEating = value;
             }
         });
     }
@@ -49,11 +49,11 @@ public class SettingsMenu : MonoBehaviour
 
             if (label == "Task Steal Cooldown")
             {
-                MoleSettings.TaskStealCooldown = value;
+                WildcardSettings.TaskStealCooldown = value;
             }
             else if (label == "Body Eat Cooldown")
             {
-                MoleSettings.BodyEatCooldown = value;
+                WildcardSettings.BodyEatCooldown = value;
             }
         });
 
