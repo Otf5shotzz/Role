@@ -1,0 +1,89 @@
+using System;
+using UnityEngine;
+using AmongUsMod.Mods;
+using AmongUsMod.Roles;
+
+public class MoleRole : CustomRole
+{
+    public bool IsWithImposters { get; set; }
+    public bool IsWithCrewmates { get; set; }
+
+    public float TaskStealCooldown { get; set; } = 30f;
+    public float BodyEatCooldown { get; set; } = 30f;
+
+    private float lastTaskStealTime;
+    private float lastBodyEatTime;
+
+    public MoleRole()
+    {
+        this.RoleName = "Black Boi";
+        this.RoleColor = Color.black;
+        if (UnityEngine.Random.value > 0.5f)
+        {
+            IsWithImposters = true;
+            IsWithCrewmates = false;
+        }
+        else
+        {
+            IsWithImposters = false;
+            IsWithCrewmates = true;
+        }
+    }
+
+    public override void OnStart()
+    {
+        lastTaskStealTime = Time.time - TaskStealCooldown;
+        lastBodyEatTime = Time.time - BodyEatCooldown;
+    }
+
+    public override void OnUpdate()
+    {
+        base.OnUpdate();
+    }
+
+    public void StealTask(Player player)
+    {
+        if (IsWithCrewmates && Time.time - lastTaskStealTime >= TaskStealCooldown)
+        {
+            lastTaskStealTime = Time.time;
+            var task = player.GetCurrentTask();
+            if (task != null)
+            {
+                player.RemoveTask(task);
+                this.AssignTask(task);
+            }
+        }
+    }
+
+    public void EatBody(Player player)
+    {
+        if (IsWithImposters && Time.time - lastBodyEatTime >= BodyEatCooldown)
+        {
+            lastBodyEatTime = Time.time;
+            var body = FindClosestBody(player);
+            if (body != null)
+            {
+                body.Remove();
+                player.IncreaseSpeed(1.5f);
+            }
+        }
+    }
+
+    private DeadBody FindClosestBody(Player player)
+    {
+        DeadBody closestBody = null;
+        float minDistance = float.MaxValue;
+
+        foreach (var body in DeadBody.AllDeadBodies)
+        {
+            float distance = Vector3.Distance(player.transform.position, body.transform.position);
+            if (distance < minDistance)
+            {
+                closestBody = body;
+                minDistance = distance;
+            }
+        }
+
+        return closestBody;
+    }
+}
