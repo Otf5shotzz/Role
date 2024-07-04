@@ -3,7 +3,7 @@ using UnityEngine;
 using AmongUsMod.Mods;
 using AmongUsMod.Roles;
 
-public class MoleRole : CustomRole
+public class WildcardRole : CustomRole
 {
     public bool IsWithImposters { get; set; }
     public bool IsWithCrewmates { get; set; }
@@ -14,7 +14,7 @@ public class MoleRole : CustomRole
     private float lastTaskStealTime;
     private float lastBodyEatTime;
 
-    public MoleRole()
+    public WildcardRole()
     {
         this.RoleName = "Black Boi";
         this.RoleColor = Color.black;
