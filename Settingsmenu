@@ -1,0 +1,62 @@
+using UnityEngine;
+using UnityEngine.UI;
+
+public class SettingsMenu : MonoBehaviour
+{
+    public GameObject settingsPanel;
+    public Toggle taskStealingToggle;
+    public Toggle bodyEatingToggle;
+    public Slider taskStealCooldownSlider;
+    public Slider bodyEatCooldownSlider;
+
+    public Text taskStealCooldownText;
+    public Text bodyEatCooldownText;
+
+    public void CreateMenu()
+    {
+        // Assuming settingsPanel is a GameObject with a panel for settings
+        settingsPanel.SetActive(true);
+
+        AddToggle("Enable Task Stealing", MoleSettings.EnableTaskStealing, taskStealingToggle);
+        AddToggle("Enable Body Eating", MoleSettings.EnableBodyEating, bodyEatingToggle);
+        AddSlider("Task Steal Cooldown", 5f, 60f, MoleSettings.TaskStealCooldown, taskStealCooldownSlider, taskStealCooldownText);
+        AddSlider("Body Eat Cooldown", 5f, 60f, MoleSettings.BodyEatCooldown, bodyEatCooldownSlider, bodyEatCooldownText);
+    }
+
+    private void AddToggle(string label, bool defaultValue, Toggle toggle)
+    {
+        toggle.isOn = defaultValue;
+        toggle.onValueChanged.AddListener((bool value) => {
+            if (label == "Enable Task Stealing")
+            {
+                MoleSettings.EnableTaskStealing = value;
+            }
+            else if (label == "Enable Body Eating")
+            {
+                MoleSettings.EnableBodyEating = value;
+            }
+        });
+    }
+
+    private void AddSlider(string label, float minValue, float maxValue, float defaultValue, Slider slider, Text sliderText)
+    {
+        slider.minValue = minValue;
+        slider.maxValue = maxValue;
+        slider.value = defaultValue;
+
+        slider.onValueChanged.AddListener((float value) => {
+            sliderText.text = $"{label}: {value}";
+
+            if (label == "Task Steal Cooldown")
+            {
+                MoleSettings.TaskStealCooldown = value;
+            }
+            else if (label == "Body Eat Cooldown")
+            {
+                MoleSettings.BodyEatCooldown = value;
+            }
+        });
+
+        sliderText.text = $"{label}: {slider.value}";
+    }
+}
